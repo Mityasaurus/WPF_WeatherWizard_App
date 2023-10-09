@@ -7,4 +7,11 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="API_CORE\Engines\" />
+    <Folder Include="APP\Models\" />
+    <Folder Include="APP\Providers\" />
+    <Folder Include="UI\Images\Icons\" />
+  </ItemGroup>
+
 </Project>
