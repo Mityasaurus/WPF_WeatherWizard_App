@@ -1,5 +1,7 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,6 +13,8 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using WPF_WeatherWizard_App.AppLayer.Models;
+using WPF_WeatherWizard_App.AppLayer.Providers;
 
 namespace WPF_WeatherWizard_App
 {
@@ -19,165 +23,107 @@ namespace WPF_WeatherWizard_App
     /// </summary>
     /// 
 
-    public class WeatherInfo
-    {
-        public string Location { get; set; }
-        public Current CurrentInfo { get; set; }
-
-        public List< ForecastItem> ForecastItems { get; set; }
-
-    }
-    public class Current
-    {
-        public string DateTime { get; set; }
-        public string CurrentImageURL { get; set; }
-        public string CurrentTemp { get; set; }
-        public string CurrentFeelsLike { get; set; }
-        public string CurrentHumidity { get; set; }
-        public string CurrentWind { get; set; }
-        public string CurrentCondition { get; set; }
-        public List<TimeForecastItem> TimeForecast { get; set; }
-    }
-
-    public class TimeForecastItem
-    {
-        public string Time { get; set; }
-        public string ForecastImageURL { get; set; }
-        public string Temp { get; set; }
-        public string Wind { get; set; }
-        public string ChanceOfRain { get; set; }
-        public string Condition { get; set; }
-    }
-
-    public class ForecastItem
-    {
-        public string ForecastDay { get; set; }
-        public string ForecastImageURL { get; set; }
-        public string ForecastMinTemp { get; set; }
-        public string ForecastMaxTemp { get; set; }
-        public string ForecastCondition { get; set; }
-
-        public List<TimeForecastItem> TimeForecast { get; set; }
-    }
 
     public partial class MainWindow : Window
     {
+        private WeatherInfo info;
+        WeatherProvider weatherProvider;
         public MainWindow()
         {
             InitializeComponent();
-            Test();
+            DefaultSet();
+
         }
 
-        private void Test()
+
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            List<TimeForecastItem> timeForecastItems = new List<TimeForecastItem>
-            {
-                new TimeForecastItem
-                {
-                    Time = "2:00",
-                    ForecastImageURL = "icon",
-                    Temp = "25",
-                    Wind = "10",
-                    ChanceOfRain = "30%",
-                    Condition = "Sunny"
-                },
-                new TimeForecastItem
-                {
-                    Time = "7:00",
-                    ForecastImageURL = "icon",
-                    Temp = "28",
-                    Wind = "15",
-                    ChanceOfRain = "20%",
-                    Condition = "Cloudy"
-                },
-                new TimeForecastItem
-                {
-                    Time = "12:00",
-                    ForecastImageURL = "icon",
-                    Temp = "28",
-                    Wind = "15",
-                    ChanceOfRain = "20%",
-                    Condition = "Cloudy"
-                },
-                new TimeForecastItem
-                {
-                    Time = "17:00",
-                    ForecastImageURL = "icon",
-                    Temp = "25",
-                    Wind = "16",
-                    ChanceOfRain = "25%",
-                    Condition = "Cloudy"
-                },
-                new TimeForecastItem
-                {
-                    Time = "22:00",
-                    ForecastImageURL = "icon",
-                    Temp = "21",
-                    Wind = "15",
-                    ChanceOfRain = "40%",
-                    Condition = "Cloudy"
-                },
-            };
 
-            
-
-            List<ForecastItem> forecastItems = new List<ForecastItem>
-            {
-                new ForecastItem
-                {
-                    ForecastDay = "Monday",
-                    ForecastImageURL = "icon",
-                    ForecastMinTemp = "20",
-                    ForecastMaxTemp = "30",
-                    ForecastCondition = "Sunny",
-                },
-                new ForecastItem
-                {
-                    ForecastDay = "Tuesday",
-                    ForecastImageURL = "icon",
-                    ForecastMinTemp = "18",
-                    ForecastMaxTemp = "28",
-                    ForecastCondition = "Cloudy"
-                },
-                new ForecastItem
-                {
-                    ForecastDay = "Wednesday",
-                    ForecastImageURL = "icon",
-                    ForecastMinTemp = "18",
-                    ForecastMaxTemp = "28",
-                    ForecastCondition = "Cloudy"
-                },
-            };
-
-           
-
-
-            Current current = new Current()
-            {
-                DateTime = DateTime.Now.ToLongDateString() + " | " + DateTime.Now.ToShortTimeString(),
-                CurrentImageURL = "icon",
-                CurrentTemp = "25",
-                CurrentFeelsLike = "23",
-                CurrentHumidity = "85",
-                CurrentWind = "23",
-                CurrentCondition = "Sunny",
-                TimeForecast = timeForecastItems
-
-            };
-
-            WeatherInfo info = new WeatherInfo()
-            {
-                Location = "Kiyv",
-                CurrentInfo = current,
-                ForecastItems = forecastItems
-            };
-
+        }
+        private void DefaultSet()
+        {
+            weatherProvider = new WeatherProvider();
+            info = weatherProvider.GetWeatherInfo("Kyiv");
+            //info = weatherProvider.GetWeatherInfo("Los-Angeles");
             DataContext = info;
 
-            lv_TimeForecastForDay.ItemsSource = timeForecastItems;
 
-            lv_Forecast.ItemsSource = forecastItems;
+            ChangeBackground(info.IsDay == 1 ? true : false);
+
+            SetImageSource(im_curCondition, $"{info.Condition}.png");
+
+            SetImageSource(im_curFeelsLike, "feels-like.png");
+            SetImageSource(im_curHumidity, "humidity.png");
+            SetImageSource(im_curWind, "wind.png");
+
+
+            lv_TimeForecastForDay.ItemsSource = info.Days[0].Hours;
+            lv_Forecast.ItemsSource = info.Days;
+        }
+
+        private Uri GetIconPath(string iconName)
+        {
+            string solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+
+            Uri backgroundImageUri = new Uri(Path.Combine(solutionDirectory, $"UI/Source/Icons/{iconName}"));
+
+            return backgroundImageUri;
+        }
+
+        private void ChangeBackground(bool day_night)
+        {
+            string backgroundName = "background-night.png";
+            if (day_night)
+            {
+                backgroundName = "background-day.png";
+            }
+
+            string solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+
+            Uri backgroundImageUri = new Uri(Path.Combine(solutionDirectory, $"UI/Source/Images/{backgroundName}"));
+
+            ImageBrush imageBrush = new ImageBrush();
+            imageBrush.ImageSource = new BitmapImage(backgroundImageUri);
+
+            this.Background = imageBrush;
+        }
+
+        private void SetImageSource(Image image, string iconName)
+        {
+            try
+            {
+                image.Source = new BitmapImage(GetIconPath(iconName));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void lv_Forecast_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int selectedIndex = lv_Forecast.SelectedIndex;
+
+
+            if (selectedIndex >= 0)
+            {
+
+                lv_TimeForecastForDay.ItemsSource = info.Days[selectedIndex].Hours;
+            }
+        }
+
+        private void btn_Сelsius_Click(object sender, RoutedEventArgs e)
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+            tb_curTemprature.Text = info.CurrentTempC.ToString();
+        }
+
+        private void btn_Fahrenheit_Click(object sender, RoutedEventArgs e)
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+            tb_curTemprature.Text = info.CurrentTempF.ToString();
         }
     }
 
