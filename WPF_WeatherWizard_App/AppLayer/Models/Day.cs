@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WPF_WeatherWizard_App.App.Models
+namespace WPF_WeatherWizard_App.AppLayer.Models
 {
     public class Day
     {
