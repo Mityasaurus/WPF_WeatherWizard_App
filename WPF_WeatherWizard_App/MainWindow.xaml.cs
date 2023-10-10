@@ -24,12 +24,5 @@ namespace WPF_WeatherWizard_App
         {
             InitializeComponent();
         }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            Uri uri = new Uri("pack://application:,,,/UI/Images/background-day.png");
-
-            this.Background = new ImageBrush(new BitmapImage(uri));
-        }
     }
 }
