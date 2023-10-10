@@ -1,5 +1,7 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,17 +13,54 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using WPF_WeatherWizard_App.AppLayer.Models;
+using WPF_WeatherWizard_App.AppLayer.Providers;
 
 namespace WPF_WeatherWizard_App
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
+
     public partial class MainWindow : Window
     {
+        private WeatherInfo info;
+        WeatherProvider weatherProvider;
         public MainWindow()
         {
             InitializeComponent();
+            DefaultSet();
+
+        }
+
+
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+
+        }
+        private void DefaultSet()
+        {
+            weatherProvider = new WeatherProvider();
+            info = weatherProvider.GetWeatherInfo("Kyiv");
+            //info = weatherProvider.GetWeatherInfo("Los-Angeles");
+            DataContext = info;
+
+
+            ChangeBackground(info.IsDay == 1 ? true : false);
+
+            SetImageSource(im_curCondition, $"{info.Condition}.png");
+
+            SetImageSource(im_curFeelsLike, "feels-like.png");
+            SetImageSource(im_curHumidity, "humidity.png");
+            SetImageSource(im_curWind, "wind.png");
+
+
+            lv_TimeForecastForDay.ItemsSource = info.Days[0].Hours;
+            lv_Forecast.ItemsSource = info.Days;
         }
 
         private Uri GetIconPath(string iconName)
@@ -36,7 +75,7 @@ namespace WPF_WeatherWizard_App
         private void ChangeBackground(bool day_night)
         {
             string backgroundName = "background-night.png";
-            if(day_night)
+            if (day_night)
             {
                 backgroundName = "background-day.png";
             }
@@ -57,33 +96,36 @@ namespace WPF_WeatherWizard_App
             {
                 image.Source = new BitmapImage(GetIconPath(iconName));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void lv_Forecast_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ChangeBackground(false);
-            //SetImageSource(image, "feels-like.png");
-            //SetImageSource(image, "humidity.png");
-            SetImageSource(image, "wind.png");
+            int selectedIndex = lv_Forecast.SelectedIndex;
 
-            //////////////////////////////////////////
 
-            //SetImageSource(imageMid, "sunny.png");
-            //SetImageSource(imageMid, "clear.png");
-            //SetImageSource(imageMid, "partly cloudy_d.png");
-            //SetImageSource(imageMid, "partly cloudy_n.png");
-            //SetImageSource(imageMid, "cloudy.png");
-            //SetImageSource(imageMid, "overcast.png");
-            //SetImageSource(imageMid, "patchy rain.png");
-            //SetImageSource(imageMid, "heavy rain.png");
-            //SetImageSource(imageMid, "thunder.png");
-            //SetImageSource(imageMid, "snow_d.png");
-            //SetImageSource(imageMid, "snow_n.png");
-            SetImageSource(imageMid, "fog.png");
+            if (selectedIndex >= 0)
+            {
+
+                lv_TimeForecastForDay.ItemsSource = info.Days[selectedIndex].Hours;
+            }
+        }
+
+        private void btn_Сelsius_Click(object sender, RoutedEventArgs e)
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+            tb_curTemprature.Text = info.CurrentTempC.ToString();
+        }
+
+        private void btn_Fahrenheit_Click(object sender, RoutedEventArgs e)
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+            tb_curTemprature.Text = info.CurrentTempF.ToString();
         }
     }
+
+
 }
