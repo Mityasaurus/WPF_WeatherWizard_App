@@ -118,7 +118,7 @@ namespace WPF_WeatherWizard_App.AppLayer.Providers
                 {
                     DateTime time = hourToken.Value<DateTime>("time");
 
-                    if (time.Hour % interval == 0)
+                    if ((time.Hour - 2) % interval == 0)
                     {
                         Hour hour = new Hour
                         {
