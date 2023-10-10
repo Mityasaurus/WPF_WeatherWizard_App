@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_WeatherWizard_App"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
-
+        <Image x:Name="image" Width="15" Height="20"></Image>
+        <Image x:Name="imageMid" Width="100" Height="100" VerticalAlignment="Top" Margin="20"></Image>
     </Grid>
 </Window>
