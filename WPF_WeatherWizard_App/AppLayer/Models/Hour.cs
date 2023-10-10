@@ -10,7 +10,7 @@ namespace WPF_WeatherWizard_App.AppLayer.Models
 
         public decimal? TempF { get; set; }
 
-        public string? condition { get; set; }
+        public string? Condition { get; set; }
 
         public int? ChanceOfRain { get; set; }
     }
