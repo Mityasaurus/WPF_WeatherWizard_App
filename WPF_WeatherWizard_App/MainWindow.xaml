@@ -107,7 +107,7 @@
                                 <TextBlock Text="Chance of rain: "  FontSize="11" Foreground="White" />
                                 <TextBlock Text="{Binding ChanceOfRain}" FontSize="11"  Foreground="White"/>
                             </StackPanel>
-                            <TextBlock Text="{Binding condition}"  HorizontalAlignment="Center" FontSize="11" Foreground="White" />
+                            <TextBlock Text="{Binding Condition}"  HorizontalAlignment="Center" FontSize="11" Foreground="White" />
 
                         </StackPanel>
                     </DataTemplate>
