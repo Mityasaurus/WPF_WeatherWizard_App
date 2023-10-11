@@ -126,7 +126,8 @@ namespace WPF_WeatherWizard_App.AppLayer.Providers
                             TempC = hourToken.Value<decimal>("temp_c"),
                             TempF = hourToken.Value<decimal>("temp_f"),
                             Condition = hourToken["condition"]?.Value<string>("text"),
-                            ChanceOfRain = hourToken.Value<int>("chance_of_rain")
+                            ChanceOfRain = hourToken.Value<int>("chance_of_rain"),
+                            IsDay = hourToken.Value<int>("is_day")
                         };
                         hours.Add(hour);
                     }

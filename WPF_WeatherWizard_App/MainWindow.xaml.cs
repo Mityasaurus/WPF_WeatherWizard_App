@@ -52,24 +52,15 @@ namespace WPF_WeatherWizard_App
 
             ChangeBackground(info.IsDay == 1 ? true : false);
 
-            SetImageSource(im_curCondition, $"{info.Condition}.png");
+            IconProvider.SetImageSource(im_curCondition, $"{info.Condition}.png");
 
-            SetImageSource(im_curFeelsLike, "feels-like.png");
-            SetImageSource(im_curHumidity, "humidity.png");
-            SetImageSource(im_curWind, "wind.png");
+            IconProvider.SetImageSource(im_curFeelsLike, "feels-like.png");
+            IconProvider.SetImageSource(im_curHumidity, "humidity.png");
+            IconProvider.SetImageSource(im_curWind, "wind.png");
 
 
             lv_TimeForecastForDay.ItemsSource = info.Days[0].Hours;
             lv_Forecast.ItemsSource = info.Days;
-        }
-
-        private Uri GetIconPath(string iconName)
-        {
-            string solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-
-            Uri backgroundImageUri = new Uri(Path.Combine(solutionDirectory, $"UI/Source/Icons/{iconName}"));
-
-            return backgroundImageUri;
         }
 
         private void ChangeBackground(bool day_night)
@@ -88,18 +79,6 @@ namespace WPF_WeatherWizard_App
             imageBrush.ImageSource = new BitmapImage(backgroundImageUri);
 
             this.Background = imageBrush;
-        }
-
-        private void SetImageSource(Image image, string iconName)
-        {
-            try
-            {
-                image.Source = new BitmapImage(GetIconPath(iconName));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
         }
 
         private void lv_Forecast_SelectionChanged(object sender, SelectionChangedEventArgs e)
