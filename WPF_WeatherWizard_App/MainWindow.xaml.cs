@@ -27,49 +27,54 @@ namespace WPF_WeatherWizard_App
     public partial class MainWindow : Window
     {
         private WeatherInfo info;
-        WeatherProvider weatherProvider;
+        private WeatherProvider weatherProvider;
+
+        private string currentCity;
+        private bool IsCelsius = true;
         public MainWindow()
         {
             InitializeComponent();
-            DefaultSet();
 
+            weatherProvider = new WeatherProvider();
+            currentCity = "Kyiv";
+
+            IconProvider.SetImageSource(im_curFeelsLike, "feels-like.png");
+            IconProvider.SetImageSource(im_curHumidity, "humidity.png");
+            IconProvider.SetImageSource(im_curWind, "wind.png");
         }
-
-
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
-
+            UpdateWeather(weatherProvider.GetWeatherInfo(currentCity));
         }
-        private void DefaultSet()
-        {
-            weatherProvider = new WeatherProvider();
-            info = weatherProvider.GetWeatherInfo("Kyiv");
-            //info = weatherProvider.GetWeatherInfo("Los-Angeles");
-            DataContext = info;
 
+        private void UpdateWeather(WeatherInfo weatherInfo)
+        {
+            info = weatherInfo;
+            DataContext = null;
+            DataContext = info;
 
             ChangeBackground(info.IsDay == 1 ? true : false);
 
-            SetImageSource(im_curCondition, $"{info.Condition}.png");
+            string iconName = IconProvider.GetWeatherIcon(info.Condition, info.IsDay == 1 ? true : false);
+            IconProvider.SetImageSource(im_curCondition, iconName);
 
-            SetImageSource(im_curFeelsLike, "feels-like.png");
-            SetImageSource(im_curHumidity, "humidity.png");
-            SetImageSource(im_curWind, "wind.png");
-
-
+            lv_TimeForecastForDay.ItemsSource = null;
             lv_TimeForecastForDay.ItemsSource = info.Days[0].Hours;
+
+            lv_Forecast.ItemsSource = null;
             lv_Forecast.ItemsSource = info.Days;
-        }
 
-        private Uri GetIconPath(string iconName)
-        {
-            string solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
 
-            Uri backgroundImageUri = new Uri(Path.Combine(solutionDirectory, $"UI/Source/Icons/{iconName}"));
-
-            return backgroundImageUri;
+            if (IsCelsius)
+            {
+                tb_curTemprature.Text = info.CurrentTempC.ToString();
+            }
+            else
+            {
+                tb_curTemprature.Text = info.CurrentTempF.ToString();
+            }
         }
 
         private void ChangeBackground(bool day_night)
@@ -90,18 +95,6 @@ namespace WPF_WeatherWizard_App
             this.Background = imageBrush;
         }
 
-        private void SetImageSource(Image image, string iconName)
-        {
-            try
-            {
-                image.Source = new BitmapImage(GetIconPath(iconName));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
         private void lv_Forecast_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int selectedIndex = lv_Forecast.SelectedIndex;
@@ -118,14 +111,59 @@ namespace WPF_WeatherWizard_App
         {
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
             tb_curTemprature.Text = info.CurrentTempC.ToString();
+            IsCelsius = true;
         }
 
         private void btn_Fahrenheit_Click(object sender, RoutedEventArgs e)
         {
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
             tb_curTemprature.Text = info.CurrentTempF.ToString();
+            IsCelsius = false;
+        }
+
+        private void lv_TimeForecastForDay_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            lv_TimeForecastForDay.SelectedIndex = -1;
+        }
+
+        private void btn_Search_Click(object sender, RoutedEventArgs e)
+        {
+            Search();
+        }
+
+        private void Search()
+        {
+            string cityToSearch = tb_Search.Text;
+
+            WeatherInfo tmp = weatherProvider.GetWeatherInfo(cityToSearch);
+            if (!string.IsNullOrWhiteSpace(tmp.Condition))
+            {
+                UpdateWeather(tmp);
+            }
+        }
+
+        private void tb_Search_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if(tb_Search.Text == "Enter city")
+            {
+                tb_Search.Text = "";
+            }
+        }
+
+        private void tb_Search_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if(tb_Search.Text == "")
+            {
+                tb_Search.Text = "Enter city";
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter && tb_Search.IsFocused)
+            {
+                Search();
+            }
         }
     }
-
-
 }
