@@ -30,12 +30,17 @@ namespace WPF_WeatherWizard_App
         private WeatherProvider weatherProvider;
 
         private string currentCity;
+        private bool IsCelsius = true;
         public MainWindow()
         {
             InitializeComponent();
 
             weatherProvider = new WeatherProvider();
             currentCity = "Kyiv";
+
+            IconProvider.SetImageSource(im_curFeelsLike, "feels-like.png");
+            IconProvider.SetImageSource(im_curHumidity, "humidity.png");
+            IconProvider.SetImageSource(im_curWind, "wind.png");
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -54,15 +59,22 @@ namespace WPF_WeatherWizard_App
             string iconName = IconProvider.GetWeatherIcon(info.Condition, info.IsDay == 1 ? true : false);
             IconProvider.SetImageSource(im_curCondition, iconName);
 
-            IconProvider.SetImageSource(im_curFeelsLike, "feels-like.png");
-            IconProvider.SetImageSource(im_curHumidity, "humidity.png");
-            IconProvider.SetImageSource(im_curWind, "wind.png");
-
             lv_TimeForecastForDay.ItemsSource = null;
             lv_TimeForecastForDay.ItemsSource = info.Days[0].Hours;
 
             lv_Forecast.ItemsSource = null;
             lv_Forecast.ItemsSource = info.Days;
+
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+
+            if (IsCelsius)
+            {
+                tb_curTemprature.Text = info.CurrentTempC.ToString();
+            }
+            else
+            {
+                tb_curTemprature.Text = info.CurrentTempF.ToString();
+            }
         }
 
         private void ChangeBackground(bool day_night)
@@ -99,12 +111,14 @@ namespace WPF_WeatherWizard_App
         {
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
             tb_curTemprature.Text = info.CurrentTempC.ToString();
+            IsCelsius = true;
         }
 
         private void btn_Fahrenheit_Click(object sender, RoutedEventArgs e)
         {
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
             tb_curTemprature.Text = info.CurrentTempF.ToString();
+            IsCelsius = false;
         }
 
         private void lv_TimeForecastForDay_SelectionChanged(object sender, SelectionChangedEventArgs e)
