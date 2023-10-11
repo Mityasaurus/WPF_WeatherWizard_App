@@ -128,10 +128,15 @@ namespace WPF_WeatherWizard_App
 
         private void btn_Search_Click(object sender, RoutedEventArgs e)
         {
+            Search();
+        }
+
+        private void Search()
+        {
             string cityToSearch = tb_Search.Text;
 
             WeatherInfo tmp = weatherProvider.GetWeatherInfo(cityToSearch);
-            if(!string.IsNullOrWhiteSpace(tmp.Condition))
+            if (!string.IsNullOrWhiteSpace(tmp.Condition))
             {
                 UpdateWeather(tmp);
             }
@@ -150,6 +155,14 @@ namespace WPF_WeatherWizard_App
             if(tb_Search.Text == "")
             {
                 tb_Search.Text = "Enter city";
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter && tb_Search.IsFocused)
+            {
+                Search();
             }
         }
     }

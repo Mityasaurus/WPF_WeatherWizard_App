@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:WPF_WeatherWizard_App"
         mc:Ignorable="d"
 
-        Title="Weather Wizard" Height="550" Width="800" MinWidth="630" MinHeight="450" Background="LightBlue" Loaded="Window_Loaded">
+        Title="Weather Wizard" Height="550" Width="800" MinWidth="630" MinHeight="450" Background="LightBlue" Loaded="Window_Loaded" KeyDown="Window_KeyDown">
    
     <Grid Margin="30, 30, 30, 15">
         <Grid.RowDefinitions >
