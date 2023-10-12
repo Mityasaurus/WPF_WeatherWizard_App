@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:WPF_WeatherWizard_App"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-       
+        <SolidColorBrush x:Key="btnSearchBackgroundBrush" Color="#17249a"></SolidColorBrush>
+        <SolidColorBrush x:Key="btnSearchForegroundBrush" Color="White"></SolidColorBrush>
+
+        <SolidColorBrush x:Key="btnSearchMouseOverBackgroundBrush" Color="#1828b9"></SolidColorBrush>
+
+        <SolidColorBrush x:Key="tbSearchBackgroundBrush" Color="White"></SolidColorBrush>
+        <SolidColorBrush x:Key="tbSearchForegroundBrush" Color="Black"></SolidColorBrush>
     </Application.Resources>
 </Application>
