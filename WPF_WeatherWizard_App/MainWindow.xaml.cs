@@ -54,11 +54,6 @@ namespace WPF_WeatherWizard_App
             DataContext = null;
             DataContext = info;
 
-            ChangeBackground(info.IsDay == 1 ? true : false);
-
-            string iconName = IconProvider.GetWeatherIcon(info.Condition, info.IsDay == 1 ? true : false);
-            IconProvider.SetImageSource(im_curCondition, iconName);
-
             lv_TimeForecastForDay.ItemsSource = null;
             lv_TimeForecastForDay.ItemsSource = info.Days[0].Hours;
 
@@ -75,6 +70,55 @@ namespace WPF_WeatherWizard_App
             {
                 tb_curTemprature.Text = info.CurrentTempF.ToString();
             }
+
+            UpdateDesign();
+        }
+
+        private void UpdateDesign()
+        {
+            ChangeBackground(info.IsDay == 1 ? true : false);
+
+            string iconName = IconProvider.GetWeatherIcon(info.Condition, info.IsDay == 1 ? true : false);
+            IconProvider.SetImageSource(im_curCondition, iconName);
+
+            if (info.IsDay == 1)
+            {
+                Application.Current.Resources["btnSearchBackgroundBrush"] = new SolidColorBrush(GetColorFromHex("#17249a"));
+                Application.Current.Resources["btnSearchForegroundBrush"] = new SolidColorBrush(Colors.White);
+                Application.Current.Resources["btnSearchMouseOverBackgroundBrush"] = new SolidColorBrush(GetColorFromHex("#1828b9"));
+
+                Application.Current.Resources["tbSearchBackgroundBrush"] = new SolidColorBrush(Colors.White);
+                Application.Current.Resources["tbSearchForegroundBrush"] = new SolidColorBrush(Colors.Black);
+            }
+            else
+            {
+                Application.Current.Resources["btnSearchBackgroundBrush"] = new SolidColorBrush(Colors.Lavender);
+                Application.Current.Resources["btnSearchForegroundBrush"] = new SolidColorBrush(GetColorFromHex("#2e3a6f"));
+                Application.Current.Resources["btnSearchMouseOverBackgroundBrush"] = new SolidColorBrush(GetColorFromHex("#f7f7ff"));
+
+                Application.Current.Resources["tbSearchBackgroundBrush"] = new SolidColorBrush(GetColorFromHex("#273161"));
+                Application.Current.Resources["tbSearchForegroundBrush"] = new SolidColorBrush(Colors.White);
+            }
+        }
+
+        private Color GetColorFromHex(string hexColor)
+        {
+            Color color;
+
+            try
+            {
+                color = Color.FromRgb(
+                    byte.Parse(hexColor.Substring(1, 2), NumberStyles.HexNumber),
+                    byte.Parse(hexColor.Substring(3, 2), NumberStyles.HexNumber),
+                    byte.Parse(hexColor.Substring(5, 2), NumberStyles.HexNumber)
+                );
+            }
+            catch
+            {
+                color = Colors.White;
+            }
+
+            return color;
         }
 
         private void ChangeBackground(bool day_night)
