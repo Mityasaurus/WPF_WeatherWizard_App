@@ -81,8 +81,9 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <materialDesign:Card Grid.Row="2" Background="#10FFFFFF"  UniformCornerRadius="20" Margin="0, 10, 0, 5"  >
-            <ListView x:Name="lv_TimeForecastForDay" Background="Transparent" SelectionChanged="lv_TimeForecastForDay_SelectionChanged">
+        
+        <materialDesign:Card Grid.Row="2" Background="#10FFFFFF" UniformCornerRadius="20" Margin="0, 10, 0, 5"  >
+            <ListView x:Name="lv_TimeForecastForDay" BorderThickness="0" Background="Transparent" SelectionChanged="lv_TimeForecastForDay_SelectionChanged">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -91,6 +92,9 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel HorizontalAlignment="Stretch" Margin="10, 0, 10,0">
+                            <StackPanel.Background>
+                                <SolidColorBrush Opacity="0"></SolidColorBrush>
+                            </StackPanel.Background>
                             <TextBlock Text="{Binding Time, StringFormat='{}{0:HH:mm}'}" HorizontalAlignment="Center"  Foreground="White" />
                             <Image x:Name="im_TimeForecast"  Source="{Binding ForecastImageURL}" Width="50" Height="50" ></Image>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Background="Transparent">
@@ -112,13 +116,25 @@
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-
+                
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <Border>
+                                        <ContentPresenter />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
-
         </materialDesign:Card>
 
         <materialDesign:Card Grid.Row="3" Background="#10FFFFFF" UniformCornerRadius="20" Margin="0, 5, 0, 0" >
-            <ListView x:Name="lv_Forecast" Background="Transparent" SelectionChanged="lv_Forecast_SelectionChanged" >
+            <ListView x:Name="lv_Forecast" BorderThickness="0" Background="Transparent" SelectionChanged="lv_Forecast_SelectionChanged" >
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -141,12 +157,29 @@
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-
+                
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <Border x:Name="BorderElement" BorderThickness="2" CornerRadius="10" BorderBrush="Transparent">
+                                        <ContentPresenter/>
+                                    </Border>
+                                    
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="#474A51"/>
+                                            <Setter Property="Cursor" Value="Hand"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
-
-
         </materialDesign:Card>
-
     </Grid>
 </Window>
 
