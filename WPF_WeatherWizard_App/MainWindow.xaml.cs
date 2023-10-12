@@ -165,7 +165,7 @@ namespace WPF_WeatherWizard_App
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter && tb_Search.IsFocused)
+            if(e.Key == Key.Enter && tb_Search.IsKeyboardFocused)
             {
                 Search();
             }
