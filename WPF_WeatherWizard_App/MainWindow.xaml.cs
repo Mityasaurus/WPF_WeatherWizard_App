@@ -146,6 +146,11 @@ namespace WPF_WeatherWizard_App
 
         private void Search()
         {
+            if (tb_Search.Text == "Enter city")
+            {
+                return;
+            }
+
             string cityToSearch = tb_Search.Text;
 
             WeatherInfo tmp = weatherProvider.GetWeatherInfo(cityToSearch);
