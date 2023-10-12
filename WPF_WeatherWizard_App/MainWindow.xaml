@@ -169,7 +169,7 @@
                                     
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="#474A51"/>
+                                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="#D0D2E4"/>
                                             <Setter Property="Cursor" Value="Hand"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
