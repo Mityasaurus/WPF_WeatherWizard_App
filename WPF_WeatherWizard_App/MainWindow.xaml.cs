@@ -31,6 +31,13 @@ namespace WPF_WeatherWizard_App
 
         private string currentCity;
         private bool IsCelsius = true;
+
+        //Text Color when day
+        Brush DayTextColor = Brushes.Black;
+
+        //Text Color when night
+        Brush NightTextColor = Brushes.White;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -54,7 +61,7 @@ namespace WPF_WeatherWizard_App
             DataContext = null;
             DataContext = info;
 
-            ChangeBackground(info.IsDay == 1 ? true : false);
+            UpdateDayNight(info.IsDay == 1 ? true : false);
 
             string iconName = IconProvider.GetWeatherIcon(info.Condition, info.IsDay == 1 ? true : false);
             IconProvider.SetImageSource(im_curCondition, iconName);
@@ -77,12 +84,18 @@ namespace WPF_WeatherWizard_App
             }
         }
 
-        private void ChangeBackground(bool day_night)
+        private void UpdateDayNight(bool isDay)
         {
-            string backgroundName = "background-night.png";
-            if (day_night)
+            string backgroundName;
+            if (isDay)
             {
+                Application.Current.Resources["DynamicTextForeground"] = DayTextColor;
                 backgroundName = "background-day.png";
+            } 
+            else
+            {
+                Application.Current.Resources["DynamicTextForeground"] = NightTextColor;
+                backgroundName = "background-night.png";
             }
 
             string solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;

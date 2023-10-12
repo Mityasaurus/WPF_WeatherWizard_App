@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:WPF_WeatherWizard_App"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-       
+        <SolidColorBrush x:Key="DynamicTextForeground" Color="Black" />
     </Application.Resources>
 </Application>

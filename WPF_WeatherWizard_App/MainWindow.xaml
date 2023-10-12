@@ -26,12 +26,12 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Location.Name}" FontSize="30"  Foreground="White"/>
-                    <TextBlock Text=", " FontSize="30" Foreground="White" />
-                    <TextBlock Text="{Binding Location.Country}"  FontSize="30" Foreground="White" />
+                    <TextBlock Text="{Binding Location.Name}" FontSize="30"  Foreground="{DynamicResource DynamicTextForeground}"/>
+                    <TextBlock Text=", " FontSize="30" Foreground="{DynamicResource DynamicTextForeground}" />
+                    <TextBlock Text="{Binding Location.Country}"  FontSize="30" Foreground="{DynamicResource DynamicTextForeground}" />
                 </StackPanel>
 
-                <TextBlock  Text="{Binding Location.LocalTime, StringFormat='{}{0:dd MMMM yyyy | HH:mm}'}" Margin="0, 10, 0, 0" Foreground="White" />
+                <TextBlock  Text="{Binding Location.LocalTime, StringFormat='{}{0:dd MMMM yyyy | HH:mm}'}" Margin="0, 10, 0, 0" Foreground="{DynamicResource DynamicTextForeground}" />
             </StackPanel>
 
             <Button Grid.Column="3" DockPanel.Dock="Right"  x:Name="btn_Search" Content="Search" Height="40" VerticalAlignment="Top" Click="btn_Search_Click"/>
@@ -47,15 +47,15 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" x:Name="tb_curTemprature" Text="{Binding CurrentTempC}" Foreground="White" MinWidth="50"  VerticalAlignment="Center"  FontSize="65" />
+            <TextBlock Grid.Column="0" x:Name="tb_curTemprature" Text="{Binding CurrentTempC}" Foreground="{DynamicResource DynamicTextForeground}" MinWidth="50"  VerticalAlignment="Center"  FontSize="65" />
 
             <!--<Button Content="{Binding CurrentTempC}" Foreground="White" MinWidth="50" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" HorizontalContentAlignment="Left"  FontSize="65"/>-->
             <DockPanel VerticalAlignment="Center" Grid.Column="1" Margin="10,0,0,0">
-                <TextBlock x:Name="tb_curCondition" Foreground="White" Text="{Binding Condition}" DockPanel.Dock="Bottom" />
+                <TextBlock x:Name="tb_curCondition" Foreground="{DynamicResource DynamicTextForeground}" Text="{Binding Condition}" DockPanel.Dock="Bottom" />
                 <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Left" >
-                    <Button Content="°C"  Background="Transparent" BorderThickness="0" HorizontalAlignment="Left" Foreground="White" HorizontalContentAlignment="Left" Click="btn_Сelsius_Click"/>
-                    <TextBlock Text=" | " HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" />
-                    <Button Content="°F"  Background="Transparent" BorderThickness="0" HorizontalAlignment="Left" Foreground="White" HorizontalContentAlignment="Left" Click="btn_Fahrenheit_Click"/>
+                    <Button Content="°C"  Background="Transparent" BorderThickness="0" HorizontalAlignment="Left" Foreground="{DynamicResource DynamicTextForeground}" HorizontalContentAlignment="Left" Click="btn_Сelsius_Click"/>
+                    <TextBlock Text=" | " HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{DynamicResource DynamicTextForeground}" />
+                    <Button Content="°F"  Background="Transparent" BorderThickness="0" HorizontalAlignment="Left" Foreground="{DynamicResource DynamicTextForeground}" HorizontalContentAlignment="Left" Click="btn_Fahrenheit_Click"/>
                 </StackPanel>
                 <TextBlock Text=""/>
             </DockPanel>
@@ -63,21 +63,21 @@
             <StackPanel  Grid.Column="4" VerticalAlignment="Center" >
                 <StackPanel Orientation="Horizontal">
                     <Image x:Name="im_curFeelsLike" Source="UI/Source/Icons/feels-like.png" />
-                    <TextBlock Text="Feels like: " Foreground="White"/>
-                    <TextBlock x:Name="tb_curFeelsLike" Text="{Binding FeelsLikeC}" Foreground="White" />
-                    <TextBlock Text=" °C" Foreground="White" />
+                    <TextBlock Text="Feels like: " Foreground="{DynamicResource DynamicTextForeground}"/>
+                    <TextBlock x:Name="tb_curFeelsLike" Text="{Binding FeelsLikeC}" Foreground="{DynamicResource DynamicTextForeground}" />
+                    <TextBlock Text=" °C" Foreground="{DynamicResource DynamicTextForeground}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Image x:Name="im_curHumidity" Source="UI/Source/Icons/humidity.png" />
-                    <TextBlock Text="Humidity: " Foreground="White"/>
-                    <TextBlock x:Name="tb_curHumidity" Text="{Binding Humidity}" Foreground="White"/>
-                    <TextBlock Text=" %" Foreground="White"/>
+                    <TextBlock Text="Humidity: " Foreground="{DynamicResource DynamicTextForeground}"/>
+                    <TextBlock x:Name="tb_curHumidity" Text="{Binding Humidity}" Foreground="{DynamicResource DynamicTextForeground}"/>
+                    <TextBlock Text=" %" Foreground="{DynamicResource DynamicTextForeground}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Image x:Name="im_curWind" Source="UI/Source/Icons/wind.png" />
-                    <TextBlock Text="Wind: " Foreground="White"/>
-                    <TextBlock x:Name="tb_curWind" Text="{Binding WindKph}" Foreground="White"/>
-                    <TextBlock Text=" km/h" Foreground="White"/>
+                    <TextBlock Text="Wind: " Foreground="{DynamicResource DynamicTextForeground}"/>
+                    <TextBlock x:Name="tb_curWind" Text="{Binding WindKph}" Foreground="{DynamicResource DynamicTextForeground}"/>
+                    <TextBlock Text=" km/h" Foreground="{DynamicResource DynamicTextForeground}"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -94,9 +94,9 @@
                             <TextBlock Text="{Binding Time, StringFormat='{}{0:HH:mm}'}" HorizontalAlignment="Center"  Foreground="White" />
                             <Image x:Name="im_TimeForecast"  Source="{Binding ForecastImageURL}" Width="50" Height="50" ></Image>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Background="Transparent">
-                                <TextBlock Text="Temp: " FontSize="11"  Foreground="White"/>
-                                <TextBlock Text="{Binding TempC}" FontSize="11"  Foreground="White"/>
-                                <TextBlock Text=" °C" FontSize="11" Foreground="White"/>
+                                <TextBlock Text="Temp: " FontSize="11"  Foreground="{DynamicResource DynamicTextForeground}"/>
+                                <TextBlock Text="{Binding TempC}" FontSize="11"  Foreground="{DynamicResource DynamicTextForeground}"/>
+                                <TextBlock Text=" °C" FontSize="11" Foreground="{DynamicResource DynamicTextForeground}"/>
                             </StackPanel>
                             <!--<StackPanel HorizontalAlignment="Center" Orientation="Horizontal" >
                                 <TextBlock Text="Wind: " FontSize="11" />
@@ -104,10 +104,10 @@
                                 <TextBlock Text=" km/h"/>
                             </StackPanel>-->
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" >
-                                <TextBlock Text="Chance of rain: "  FontSize="11" Foreground="White" />
-                                <TextBlock Text="{Binding ChanceOfRain}" FontSize="11"  Foreground="White"/>
+                                <TextBlock Text="Chance of rain: "  FontSize="11" Foreground="{DynamicResource DynamicTextForeground}" />
+                                <TextBlock Text="{Binding ChanceOfRain}" FontSize="11"  Foreground="{DynamicResource DynamicTextForeground}"/>
                             </StackPanel>
-                            <TextBlock Text="{Binding Condition}"  HorizontalAlignment="Center" FontSize="11" Foreground="White" />
+                            <TextBlock Text="{Binding Condition}"  HorizontalAlignment="Center" FontSize="11" Foreground="{DynamicResource DynamicTextForeground}" />
 
                         </StackPanel>
                     </DataTemplate>
@@ -127,17 +127,17 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel HorizontalAlignment="Center" Margin="30, 0, 30,0" >
-                            <TextBlock Text="{Binding Date, StringFormat='{}{0:dddd}'}" HorizontalAlignment="Center" Foreground="White" />
+                            <TextBlock Text="{Binding Date, StringFormat='{}{0:dddd}'}" HorizontalAlignment="Center" Foreground="{DynamicResource DynamicTextForeground}" />
 
                             <Image x:Name="im_DayForecast"  Source="{Binding ForecastImageURL}" Width="70" Height="70"></Image>
 
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <TextBlock Text="{Binding MinTempC}"  Foreground="White"/>
-                                <TextBlock Text="° - " Foreground="White" />
-                                <TextBlock Text="{Binding MaxTempC}"  Foreground="White" />
-                                <TextBlock Text="°" Foreground="White" />
+                                <TextBlock Text="{Binding MinTempC}"  Foreground="{DynamicResource DynamicTextForeground}"/>
+                                <TextBlock Text="° - " Foreground="{DynamicResource DynamicTextForeground}" />
+                                <TextBlock Text="{Binding MaxTempC}"  Foreground="{DynamicResource DynamicTextForeground}" />
+                                <TextBlock Text="°" Foreground="{DynamicResource DynamicTextForeground}" />
                             </StackPanel>
-                            <TextBlock Text="{Binding Condition}" HorizontalAlignment="Center" Foreground="White" />
+                            <TextBlock Text="{Binding Condition}" HorizontalAlignment="Center" Foreground="{DynamicResource DynamicTextForeground}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
