@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -13,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using WPF_WeatherWizard_App.AppLayer.Models;
 using WPF_WeatherWizard_App.AppLayer.Providers;
 
@@ -31,6 +31,9 @@ namespace WPF_WeatherWizard_App
 
         private string currentCity;
         private bool IsCelsius = true;
+        private int selectedDayIndex = -1;
+
+        private DispatcherTimer timer;
         public MainWindow()
         {
             InitializeComponent();
@@ -41,6 +44,21 @@ namespace WPF_WeatherWizard_App
             IconProvider.SetImageSource(im_curFeelsLike, "feels-like.png");
             IconProvider.SetImageSource(im_curHumidity, "humidity.png");
             IconProvider.SetImageSource(im_curWind, "wind.png");
+
+            timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 2, 30);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+        }
+
+        private void Timer_Tick(object? sender, EventArgs e)
+        {
+            UpdateWeather(weatherProvider.GetWeatherInfo(currentCity));
+
+            if (selectedDayIndex >= 0)
+            {
+                lv_TimeForecastForDay.ItemsSource = info.Days[selectedDayIndex].Hours;
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -51,6 +69,7 @@ namespace WPF_WeatherWizard_App
         private void UpdateWeather(WeatherInfo weatherInfo)
         {
             info = weatherInfo;
+            currentCity = weatherInfo.Location.Name;
             DataContext = null;
             DataContext = info;
 
@@ -143,11 +162,10 @@ namespace WPF_WeatherWizard_App
         {
             int selectedIndex = lv_Forecast.SelectedIndex;
 
-
             if (selectedIndex >= 0)
             {
-
                 lv_TimeForecastForDay.ItemsSource = info.Days[selectedIndex].Hours;
+                selectedDayIndex = selectedIndex;
             }
         }
 
@@ -163,11 +181,6 @@ namespace WPF_WeatherWizard_App
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
             tb_curTemprature.Text = info.CurrentTempF.ToString();
             IsCelsius = false;
-        }
-
-        private void lv_TimeForecastForDay_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            lv_TimeForecastForDay.SelectedIndex = -1;
         }
 
         private void btn_Search_Click(object sender, RoutedEventArgs e)

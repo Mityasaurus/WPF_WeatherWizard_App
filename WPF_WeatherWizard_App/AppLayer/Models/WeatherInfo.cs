@@ -4,7 +4,7 @@ namespace WPF_WeatherWizard_App.AppLayer.Models
 {
     public class WeatherInfo
     {
-        public Location Location { get; set; }
+        public Location? Location { get; set; }
 
         public decimal? CurrentTempC { get; set; }
 
