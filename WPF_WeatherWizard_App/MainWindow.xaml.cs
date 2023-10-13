@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -41,9 +35,9 @@ namespace WPF_WeatherWizard_App
             weatherProvider = new WeatherProvider();
             currentCity = "Kyiv";
 
-            IconProvider.SetImageSource(im_curFeelsLike, "feels-like.png");
-            IconProvider.SetImageSource(im_curHumidity, "humidity.png");
-            IconProvider.SetImageSource(im_curWind, "wind.png");
+            ImageProvider.SetImageSource(im_curFeelsLike, "feels-like.png");
+            ImageProvider.SetImageSource(im_curHumidity, "humidity.png");
+            ImageProvider.SetImageSource(im_curWind, "wind.png");
 
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 2, 30);
@@ -98,7 +92,7 @@ namespace WPF_WeatherWizard_App
             ChangeBackground(info.IsDay == 1 ? true : false);
 
             string iconName = IconProvider.GetWeatherIcon(info.Condition, info.IsDay == 1 ? true : false);
-            IconProvider.SetImageSource(im_curCondition, iconName);
+            ImageProvider.SetImageSource(im_curCondition, iconName);
 
             if (info.IsDay == 1)
             {
@@ -206,7 +200,7 @@ namespace WPF_WeatherWizard_App
 
         private void tb_Search_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            if(tb_Search.Text == "Enter city")
+            if (tb_Search.Text == "Enter city")
             {
                 tb_Search.Text = "";
             }
@@ -214,7 +208,7 @@ namespace WPF_WeatherWizard_App
 
         private void tb_Search_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            if(tb_Search.Text == "")
+            if (tb_Search.Text == "")
             {
                 tb_Search.Text = "Enter city";
             }
@@ -222,7 +216,7 @@ namespace WPF_WeatherWizard_App
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter && tb_Search.IsKeyboardFocused)
+            if (e.Key == Key.Enter && tb_Search.IsKeyboardFocused)
             {
                 Search();
             }
