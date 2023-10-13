@@ -46,7 +46,7 @@ namespace WPF_WeatherWizard_App
             IconProvider.SetImageSource(im_curWind, "wind.png");
 
             timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 1, 0);
+            timer.Interval = new TimeSpan(0, 2, 30);
             timer.Tick += Timer_Tick;
             timer.Start();
         }
