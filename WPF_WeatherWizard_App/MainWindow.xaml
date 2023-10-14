@@ -71,7 +71,10 @@
                 </DockPanel>
             </Viewbox>
 
-            <Image VerticalAlignment="Center" Grid.Column="3"  x:Name="im_curCondition"  Height="120" Width="120"></Image>
+            <Viewbox Grid.Column="3" VerticalAlignment="Center">
+                <Image VerticalAlignment="Center" Grid.Column="3"  x:Name="im_curCondition"  Height="120" Width="120"></Image>
+            </Viewbox>
+
             <Viewbox Grid.Column="4" VerticalAlignment="Center">
                 <StackPanel  Grid.Column="4" VerticalAlignment="Center" Margin="20" >
                     <StackPanel Orientation="Horizontal">
