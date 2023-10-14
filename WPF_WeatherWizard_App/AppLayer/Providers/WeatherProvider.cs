@@ -8,7 +8,7 @@ namespace WPF_WeatherWizard_App.AppLayer.Providers
 {
     internal class WeatherProvider
     {
-        private readonly WeatherWizardApiEngine engine;
+        private readonly IApi engine;
 
         public WeatherProvider()
         {
