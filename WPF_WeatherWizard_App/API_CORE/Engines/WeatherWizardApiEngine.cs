@@ -14,16 +14,25 @@ public class WeatherWizardApiEngine : IApi
         _client = new HttpClient();
         _client.BaseAddress = new Uri(_baseAddress);
     }
-    
+
     public string GetForecast(string city, int days = 4, bool aqi = false, bool alerts = false) // aqi - air quality
     {
         var response = _client.SendAsync(
-            new HttpRequestMessage(HttpMethod.Get, 
+            new HttpRequestMessage(HttpMethod.Get,
                 _baseAddress + $"?key={_apiKey}&q={city}&days={days}&aqi={aqi}&alerts={alerts}"
                 ));
         var content = response.Result.Content.ReadAsStringAsync();
         return content.Result;
     }
+
+    public string GetForecast(double lat, double lng, int days = 4, bool aqi = false, bool alerts = false)
+    {
+        string q = $"{lat},{lng}";
+
+        var response = _client.SendAsync(
+            new HttpRequestMessage(HttpMethod.Get,
+                _baseAddress + $"?key={_apiKey}&q={q}&days={days}&aqi={aqi}&alerts={alerts}"
+                ));
 
     public string GetAutoComplete(string query)
     {
@@ -31,6 +40,7 @@ public class WeatherWizardApiEngine : IApi
             new HttpRequestMessage(HttpMethod.Get, 
                 $"http://api.weatherapi.com/v1/search.json?key={_apiKey}&q={query}")
             );
+
         var content = response.Result.Content.ReadAsStringAsync();
         return content.Result;
     }

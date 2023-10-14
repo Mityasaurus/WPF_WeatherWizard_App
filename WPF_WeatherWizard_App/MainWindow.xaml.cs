@@ -152,7 +152,7 @@ namespace WPF_WeatherWizard_App
 
             ImageBrush imageBrush = new ImageBrush();
             imageBrush.ImageSource = new BitmapImage(geolocationImageUri);
-            
+
             btn_Geolocation.Background = imageBrush;
         }
 
@@ -242,6 +242,16 @@ namespace WPF_WeatherWizard_App
             {
                 Search();
             }
+        }
+
+        private void btn_Geolocation_Click(object sender, RoutedEventArgs e)
+        {
+            GmapWindow gmapWindow = new GmapWindow();
+            gmapWindow.ShowDialog();
+
+            var selectedWeatherInfo = weatherProvider.GetWeatherInfo(gmapWindow.Lat, gmapWindow.Lng);
+
+            UpdateWeather(selectedWeatherInfo);
         }
     }
 }
