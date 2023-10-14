@@ -24,13 +24,13 @@
             <RowDefinition Height="1.2*"></RowDefinition>
         </Grid.RowDefinitions>
         
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
-                <ColumnDefinition/>
-                <ColumnDefinition MinWidth="85"  Width="1.4*" />
-                <ColumnDefinition MinWidth="85"  Width="0.6*"/>
-                <ColumnDefinition MinWidth="35"  Width="0.3*"/>
+                <ColumnDefinition MinWidth="10"/>
+                <ColumnDefinition MinWidth="50"  Width="1.4*" />
+                <ColumnDefinition MinWidth="55"  Width="0.6*"/>
+                <ColumnDefinition  Width="45"/>
             </Grid.ColumnDefinitions>
 
             <Viewbox Grid.Column="0">
