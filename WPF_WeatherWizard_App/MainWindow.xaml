@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="UI/Source/Style.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+        
     </Window.Resources>
     
     <Grid Margin="30, 30, 30, 15">
@@ -23,12 +24,13 @@
             <RowDefinition Height="1.2*"></RowDefinition>
         </Grid.RowDefinitions>
         
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
-                <ColumnDefinition/>
-                <ColumnDefinition  Width="1.4*" />
-                <ColumnDefinition  Width="0.6*"/>
+                <ColumnDefinition MinWidth="10"/>
+                <ColumnDefinition MinWidth="50"  Width="1.4*" />
+                <ColumnDefinition MinWidth="55"  Width="0.6*"/>
+                <ColumnDefinition  Width="45"/>
             </Grid.ColumnDefinitions>
 
             <Viewbox Grid.Column="0">
@@ -43,6 +45,8 @@
             </Viewbox>
             <Button Grid.Column="3" x:Name="btn_Search" Content="Search" Click="btn_Search_Click"  Style="{StaticResource SearchButtonStyle}"/>
             <TextBox Grid.Column="2" Text="Enter city" x:Name="tb_Search"  GotKeyboardFocus="tb_Search_GotKeyboardFocus" LostKeyboardFocus="tb_Search_LostKeyboardFocus" Style="{StaticResource EnterSearchStyle}"/>
+            <Button x:Name="btn_Geolocation" Grid.Column="4" Style="{DynamicResource GeolocationButtonStyle}"></Button>
+
         </Grid>
 
         <Grid Grid.Row="1">

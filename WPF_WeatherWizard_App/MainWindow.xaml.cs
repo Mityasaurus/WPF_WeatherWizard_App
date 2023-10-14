@@ -93,6 +93,7 @@ namespace WPF_WeatherWizard_App
         private void UpdateDesign()
         {
             ChangeBackground(info.IsDay == 1 ? true : false);
+            ChangeGeolocationIcon(info.IsDay == 1 ? true : false);
 
             string iconName = IconProvider.GetWeatherIcon(info.Condition, info.IsDay == 1 ? true : false);
             ImageProvider.SetImageSource(im_curCondition, iconName);
@@ -135,6 +136,24 @@ namespace WPF_WeatherWizard_App
             }
 
             return color;
+        }
+
+        private void ChangeGeolocationIcon(bool day_night)
+        {
+            string geolocationImageName = "location-light.png";
+            if (day_night)
+            {
+                geolocationImageName = "location-dark.png";
+            }
+
+            string solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+
+            Uri geolocationImageUri = new Uri(Path.Combine(solutionDirectory, $"UI/Source/Images/{geolocationImageName}"));
+
+            ImageBrush imageBrush = new ImageBrush();
+            imageBrush.ImageSource = new BitmapImage(geolocationImageUri);
+            
+            btn_Geolocation.Background = imageBrush;
         }
 
         private void ChangeBackground(bool day_night)
