@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Windows;
@@ -46,6 +47,9 @@ namespace WPF_WeatherWizard_App
             timer.Interval = new TimeSpan(0, 2, 30);
             timer.Tick += Timer_Tick;
             timer.Start();
+
+            ContextMenu cm_Search = new ContextMenu();
+            tb_Search.ContextMenu = cm_Search;
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -252,6 +256,63 @@ namespace WPF_WeatherWizard_App
             var selectedWeatherInfo = weatherProvider.GetWeatherInfo(gmapWindow.Lat, gmapWindow.Lng);
 
             UpdateWeather(selectedWeatherInfo);
+        }
+
+        private List<Location> TestGetLocationList()
+        {
+            List<Location> list = new List<Location>();
+
+            Location location = new Location()
+            {
+                Name = "Kyiv",
+                Country = "Ukraine",
+                LocalTime = DateTime.Now
+            };
+            Location location2 = new Location()
+            {
+                Name = "Lviv",
+                Country = "Ukraine",
+                LocalTime = DateTime.Now
+            };
+            Location location3 = new Location()
+            {
+                Name = "New York",
+                Country = "United States of America",
+                LocalTime = DateTime.Now
+            };
+
+            list.Add(location);
+            list.Add(location2);
+            list.Add(location3);
+
+            return list;
+        }
+
+        
+        private void tb_Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //додати взаємодію з функцією на запит списку
+            var locations = TestGetLocationList();
+
+            if(locationList != null)
+            {
+                locationList.ItemsSource = locations;
+                locationPopup.IsOpen = !string.IsNullOrWhiteSpace(tb_Search.Text);
+            }
+           
+
+        }
+
+        private void locationList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            if (locationList.SelectedItem != null)
+            {
+                Location selectedLocation = locationList.SelectedItem as Location;
+                tb_Search.Text = selectedLocation.Name;
+                
+            }
+            Search();
         }
     }
 }
