@@ -43,7 +43,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
-                    <Border x:Name="BorderElement" BorderThickness="2" CornerRadius="10" BorderBrush="Transparent">
+                    <Border x:Name="BorderElement" BorderThickness="2" CornerRadius="20" BorderBrush="Transparent">
                         <ContentPresenter/>
                     </Border>
 
