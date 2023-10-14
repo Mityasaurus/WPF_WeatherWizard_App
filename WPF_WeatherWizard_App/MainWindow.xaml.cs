@@ -33,7 +33,10 @@ namespace WPF_WeatherWizard_App
             InitializeComponent();
 
             weatherProvider = new WeatherProvider();
-            currentCity = "Kyiv";
+
+            var usersCity = LocationProvider.GetCurrentLocation();
+
+            currentCity = usersCity != null ? usersCity : "Kyiv";
 
             ImageProvider.SetImageSource(im_curFeelsLike, "feels-like.png");
             ImageProvider.SetImageSource(im_curHumidity, "humidity.png");
