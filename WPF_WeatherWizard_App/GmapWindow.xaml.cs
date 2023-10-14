@@ -13,22 +13,19 @@ namespace WPF_WeatherWizard_App
         {
             InitializeComponent();
 
-            // Инициализация карты
             gmapControl.MapProvider = GMapProviders.GoogleMap;
             GMaps.Instance.Mode = AccessMode.ServerOnly;
-            gmapControl.Position = new PointLatLng(0, 0); // Начальное положение карты
-            gmapControl.MapProvider = GoogleMapProvider.Instance; //какой провайдер карт используется (в нашем случае гугл) 
-            gmapControl.MinZoom = 3; //минимальный зум
-            gmapControl.MaxZoom = 16; //максимальный зум
-            gmapControl.Zoom = 5; // какой используется зум при открытии
-            gmapControl.Position = new PointLatLng(49.5397, 31.4960); // точка в центре карты при открытии (центр России)
-            gmapControl.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter; // как приближает (просто в центр карты или по положению мыши)
-            gmapControl.CanDragMap = true; // перетаскивание карты мышью
-            //gmapControl.DragButton = MouseButtons.Left; // какой кнопкой осуществляется перетаскивание
-            gmapControl.ShowCenter = false; //показывать или скрывать красный крестик в центре
-            gmapControl.ShowTileGridLines = false; //показывать или скрывать тайлы
+            gmapControl.Position = new PointLatLng(0, 0);
+            gmapControl.MapProvider = GoogleMapProvider.Instance;
+            gmapControl.MinZoom = 3;
+            gmapControl.MaxZoom = 16;
+            gmapControl.Zoom = 5;
+            gmapControl.Position = new PointLatLng(49.5397, 31.4960);
+            gmapControl.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            gmapControl.CanDragMap = true;
+            gmapControl.ShowCenter = false;
+            gmapControl.ShowTileGridLines = false;
 
-            // Обработчик события для щелчка мышью на карте
             gmapControl.MouseDoubleClick += GmapControl_MouseClick;
         }
 
@@ -37,6 +34,7 @@ namespace WPF_WeatherWizard_App
             PointLatLng point = gmapControl.FromLocalToLatLng((int)e.GetPosition(gmapControl).X, (int)e.GetPosition(gmapControl).Y);
             Lat = point.Lat;
             Lng = point.Lng;
+            this.DialogResult = true;
             this.Close();
         }
     }
