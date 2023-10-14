@@ -217,10 +217,14 @@ namespace WPF_WeatherWizard_App
 
             string cityToSearch = tb_Search.Text;
 
-            WeatherInfo tmp = weatherProvider.GetWeatherInfo(cityToSearch);
-            if (!string.IsNullOrWhiteSpace(tmp.Condition))
+            try
             {
-                UpdateWeather(tmp);
+                var selectedWeatherInfo = weatherProvider.GetWeatherInfo(cityToSearch);
+                UpdateWeather(selectedWeatherInfo);
+            }
+            catch (Exception ex)
+            {
+
             }
         }
 
@@ -253,9 +257,20 @@ namespace WPF_WeatherWizard_App
             GmapWindow gmapWindow = new GmapWindow();
             gmapWindow.ShowDialog();
 
-            var selectedWeatherInfo = weatherProvider.GetWeatherInfo(gmapWindow.Lat, gmapWindow.Lng);
+            if(gmapWindow.DialogResult == false)
+            {
+                return;
+            }
 
-            UpdateWeather(selectedWeatherInfo);
+            try
+            {
+                var selectedWeatherInfo = weatherProvider.GetWeatherInfo(gmapWindow.Lat, gmapWindow.Lng);
+                UpdateWeather(selectedWeatherInfo);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private List<Location> TestGetLocationList()
