@@ -14,9 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="UI\Source\Images\location-dark.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="UI\Source\Images\location-light.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
