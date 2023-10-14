@@ -39,6 +39,26 @@ namespace WPF_WeatherWizard_App.AppLayer.Providers
             return weatherInfo;
         }
 
+        public List<Location> GetAutoComplete(string query)
+        {
+            List<Location> options = new List<Location>();
+
+            string json = engine.GetAutoComplete(query);
+            JArray jTokens = JToken.Parse(json) as JArray;
+            foreach (JToken token in jTokens)
+            {
+                Location location = new Location();
+                location.Name = token.Value<string>("name");
+                location.Country = token.Value<string>("country");
+                location.Lat = token.Value<decimal>("lat");
+                location.Lon = token.Value<decimal>("lon");
+                location.LocalTime = token.Value<DateTime>("localtime");
+                
+                options.Add(location);
+            }
+            return options;
+        }
+
         private void SetLocation(WeatherInfo weatherInfo, JObject jObject)
         {
             JToken token = jObject["location"];
@@ -50,6 +70,8 @@ namespace WPF_WeatherWizard_App.AppLayer.Providers
 
             location.Name = token.Value<string>("name");
             location.Country = token.Value<string>("country");
+            location.Lat = token.Value<decimal>("lat");
+            location.Lon = token.Value<decimal>("lon");
             location.LocalTime = token.Value<DateTime>("localtime");
 
             weatherInfo.Location = location;
