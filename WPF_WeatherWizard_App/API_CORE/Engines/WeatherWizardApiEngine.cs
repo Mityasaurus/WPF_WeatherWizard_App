@@ -34,6 +34,10 @@ public class WeatherWizardApiEngine : IApi
                 _baseAddress + $"?key={_apiKey}&q={q}&days={days}&aqi={aqi}&alerts={alerts}"
                 ));
 
+        var content = response.Result.Content.ReadAsStringAsync();
+        return content.Result;
+    }
+
     public string GetAutoComplete(string query)
     {
         var response = _client.SendAsync(
