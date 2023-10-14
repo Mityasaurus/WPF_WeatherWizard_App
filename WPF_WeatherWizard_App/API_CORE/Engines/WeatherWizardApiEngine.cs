@@ -24,4 +24,14 @@ public class WeatherWizardApiEngine : IApi
         var content = response.Result.Content.ReadAsStringAsync();
         return content.Result;
     }
+
+    public string GetAutoComplete(string query)
+    {
+        var response = _client.SendAsync(
+            new HttpRequestMessage(HttpMethod.Get, 
+                $"http://api.weatherapi.com/v1/search.json?key={_apiKey}&q={query}")
+            );
+        var content = response.Result.Content.ReadAsStringAsync();
+        return content.Result;
+    }
 }
