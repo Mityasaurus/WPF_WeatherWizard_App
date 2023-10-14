@@ -18,13 +18,23 @@ namespace WPF_WeatherWizard_App.AppLayer.Providers
         public WeatherInfo GetWeatherInfo(string city)
         {
             string json = engine.GetForecast(city);
+            return ParseWeatherInfo(json);
+        }
 
+        public WeatherInfo GetWeatherInfo(double lat, double lng)
+        {
+            string json = engine.GetForecast(lat, lng);
+            return ParseWeatherInfo(json);
+        }
+
+        private WeatherInfo ParseWeatherInfo(string json)
+        {
             JObject jObject = JObject.Parse(json);
-
             WeatherInfo weatherInfo = new WeatherInfo();
 
             SetLocation(weatherInfo, jObject);
             SetCurrentData(weatherInfo, jObject);
+            SetDays(weatherInfo, jObject);
 
             return weatherInfo;
         }

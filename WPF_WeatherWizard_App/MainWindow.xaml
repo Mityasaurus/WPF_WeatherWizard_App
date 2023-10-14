@@ -45,7 +45,7 @@
             </Viewbox>
             <Button Grid.Column="3" x:Name="btn_Search" Content="Search" Click="btn_Search_Click"  Style="{StaticResource SearchButtonStyle}"/>
             <TextBox Grid.Column="2" Text="Enter city" x:Name="tb_Search"  GotKeyboardFocus="tb_Search_GotKeyboardFocus" LostKeyboardFocus="tb_Search_LostKeyboardFocus" Style="{StaticResource EnterSearchStyle}"/>
-            <Button x:Name="btn_Geolocation" Grid.Column="4" Style="{DynamicResource GeolocationButtonStyle}"></Button>
+            <Button x:Name="btn_Geolocation" Grid.Column="4" Style="{DynamicResource GeolocationButtonStyle}" Click="btn_Geolocation_Click"></Button>
 
         </Grid>
 
