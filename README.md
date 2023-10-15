@@ -1,54 +1,54 @@
-# Weather Wizard
+# Weather Wizard :partly_sunny:
 
-Додаток "Weather Wizard" - це десктопний додаток для отримання актуальних прогнозів погоди в будь-якому місті на земній кулі. Він надає інформацію про погодні умови на сьогодні та наступні три дні, включаючи температуру, вітер, опади та інші важливі показники. Головна мета додатку - забезпечити користувачів надійною та зручною інформацією для планування активностей і подорожей з огляду на погодні умови.
+Weather Wizard is a desktop application for getting up-to-date weather forecasts in any city on the globe. It provides information on weather conditions for today and the next three days, including :thermometer:&nbsp;temperature, :wind_face:&nbsp;wind, :droplet:&nbsp;precipitation, and other important indicators. The main goal of the application is to provide users with reliable and convenient information for planning activities and traveling with regard to weather conditions.
 
-## Команда
+## Team
 
-- Бовдун Дмитро - Team Lead
-- Шлюганова Юлія - UI/UX розробник
-- Лавриненко Олександр - розробник на рівні додатку
-- Соколовський Юрій - API розробник
+- Dmytro Bovdun - Team Lead
+- Yuliia Shliuhanova - UI/UX developer
+- Oleksandr Lavrynenko - App layer developer
+- Yurii Sokolovskyi - API developer
 
-## Технології
+## Technologies and Tools
 
-- Мова програмування: C#
+- Language: C#
 - Windows Presentation Foundation (WPF)
 - HTTP Requests
 
-## Установка
+## Installation
 
-Для встановлення додатку з Git склонуйте репозиторій:
+To install an app from Git, clone the repository
 
 ```shell
 git clone https://github.com/Mityasaurus/WPF_WeatherWizard_App
 ```
-## Використання
+## Usage
 
-1. **Перегляд прогнозу погоди:**
+1. **Viewing the weather forecast:**
 
-    Користувач може переглядати прогноз погоди на сьогодні для свого поточного міста.
-    Користувач також може переглядати прогноз погоди на 3 дні вперед для того ж міста.
+    Users can view the weather forecast for today for their current city:cityscape:.<br/>
+    User can also view the weather forecast for 3 days ahead for the same city:clock12:.
 
-2. **Пошук міста за назвою:**
+2. **Search for a city by name:**
 
-    Користувач може використовувати функцію пошуку, щоб знайти місто за назвою або ключовим словом.
-    Після введення назви міста, додаток виводить відповідні результати і дозволяє користувачу обрати місто зі списку результатів.
+    The user can use the search function to find a city by name or keyword:ab:.<br/>
+    After entering a city name, the application displays relevant results and allows the user to select a city from the list of results:abcd:.
 
-3. **Вибір міста на мапі світу:**
+3. **Selecting a city on the world map:**
 
-    Додаток включає функціональність для вибору міста на мапі світу.
-    Користувач може переглядати світову карту, обирати місце та отримувати прогноз погоди для обраного місця.
+    The application includes functionality to select a city on the world map:world_map:.<br/>
+    The user can browse the world map, select a location, and receive a weather forecast for the selected location:desert_island:.
 
-## Автори
+## Authors
 
-- **Бовдун Дмитро** - Team Lead
+- **Dmytro Bovdun** - Team Lead
     - GitHub: [https://github.com/Mityasaurus](https://github.com/Mityasaurus)
 
-- **Шлюганова Юлія** - UI/UX розробник
+- **Yuliia Shliuhanova** - UI/UX developer
     - GitHub: [https://github.com/Yuliia010](https://github.com/Yuliia010)
 
-- **Лавриненко Олександр** - Розробник на рівні додатку
+- **Oleksandr Lavrynenko** - App layer developer
     - GitHub: [https://github.com/Refer3n](https://github.com/Refer3n)
 
-- **Соколовський Юрій** - API розробник
+- **Yurii Sokolovskyi** - API developer
     - GitHub: [https://github.com/YuraSokolovskyi](https://github.com/YuraSokolovskyi)
