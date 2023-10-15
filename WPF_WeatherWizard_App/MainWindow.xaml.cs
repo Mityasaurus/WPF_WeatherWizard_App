@@ -279,6 +279,7 @@ namespace WPF_WeatherWizard_App
             {
                 var selectedWeatherInfo = weatherProvider.GetWeatherInfo(gmapWindow.Lat, gmapWindow.Lng);
                 UpdateWeather(selectedWeatherInfo);
+                tb_Search.Text = info.Location.Name;
             }
             catch (Exception ex)
             {
