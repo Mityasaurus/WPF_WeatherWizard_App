@@ -227,6 +227,19 @@ namespace WPF_WeatherWizard_App
 
             }
         }
+        
+        private void Search(string query)
+        {
+            try
+            {
+                var selectedWeatherInfo = weatherProvider.GetWeatherInfo(query);
+                UpdateWeather(selectedWeatherInfo);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 
         private void tb_Search_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
@@ -306,16 +319,15 @@ namespace WPF_WeatherWizard_App
         
         private void tb_Search_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //додати взаємодію з функцією на запит списку
-            var locations = TestGetLocationList();
+            if (weatherProvider == null) return;
+            List<Location> locations = weatherProvider.GetAutoComplete(tb_Search.Text);
 
             if(locationList != null)
             {
                 locationList.ItemsSource = locations;
+                locationList.Items.Refresh();
                 locationPopup.IsOpen = !string.IsNullOrWhiteSpace(tb_Search.Text);
             }
-           
-
         }
 
         private void locationList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -325,9 +337,8 @@ namespace WPF_WeatherWizard_App
             {
                 Location selectedLocation = locationList.SelectedItem as Location;
                 tb_Search.Text = selectedLocation.Name;
-                
+                Search($"{selectedLocation.Lat},{selectedLocation.Lon}");
             }
-            Search();
         }
     }
 }

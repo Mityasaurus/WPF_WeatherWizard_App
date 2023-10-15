@@ -41,6 +41,7 @@ namespace WPF_WeatherWizard_App.AppLayer.Providers
 
         public List<Location> GetAutoComplete(string query)
         {
+            if (query.Trim() == "") return new List<Location>();
             List<Location> options = new List<Location>();
 
             string json = engine.GetAutoComplete(query);
