@@ -221,6 +221,8 @@ namespace WPF_WeatherWizard_App
             {
                 var selectedWeatherInfo = weatherProvider.GetWeatherInfo(cityToSearch);
                 UpdateWeather(selectedWeatherInfo);
+
+                locationPopup.IsOpen = false;
             }
             catch (Exception ex)
             {
@@ -234,6 +236,7 @@ namespace WPF_WeatherWizard_App
             {
                 var selectedWeatherInfo = weatherProvider.GetWeatherInfo(query);
                 UpdateWeather(selectedWeatherInfo);
+                locationPopup.IsOpen = false;
             }
             catch (Exception ex)
             {
