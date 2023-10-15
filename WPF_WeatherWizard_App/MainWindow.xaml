@@ -3,10 +3,177 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:WPF_WeatherWizard_App"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Weather Wizard" Height="570" Width="810" MinWidth="810" MinHeight="570" Background="LightBlue" Loaded="Window_Loaded" KeyDown="Window_KeyDown">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="UI/Source/Style.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
+    </Window.Resources>
+    
+    <Grid Margin="30, 30, 30, 15">
+        <Grid.RowDefinitions >
+            <RowDefinition Height="0.7*" ></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="1.2*"></RowDefinition>
+            <RowDefinition Height="1.2*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition MinWidth="10"/>
+                <ColumnDefinition MinWidth="65"  Width="1.4*" />
+                <ColumnDefinition MinWidth="65"  Width="0.6*"/>
+                <ColumnDefinition  Width="45"/>
+            </Grid.ColumnDefinitions>
 
+            <Viewbox Grid.Column="0">
+                <StackPanel >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Location.Name}" Style="{StaticResource LocationTbStyle}" />
+                        <TextBlock Text=", " Style="{StaticResource LocationTbStyle}" />
+                        <TextBlock Text="{Binding Location.Country}"  Style="{StaticResource LocationTbStyle}" />
+                    </StackPanel>
+                    <TextBlock  Text="{Binding Location.LocalTime, StringFormat='{}{0:dd MMMM yyyy | HH:mm}'}" Margin="0, 10, 0, 0" Style="{StaticResource TbStyle}" />
+                </StackPanel>
+            </Viewbox>
+            <Button Grid.Column="3" x:Name="btn_Search" Content="Search" Click="btn_Search_Click"  Style="{StaticResource SearchButtonStyle}"/>
+            <TextBox Grid.Column="2" x:Name="tb_Search" Text="Enter city" TextChanged="tb_Search_TextChanged" GotKeyboardFocus="tb_Search_GotKeyboardFocus" LostKeyboardFocus="tb_Search_LostKeyboardFocus" Style="{StaticResource EnterSearchStyle}"></TextBox>
+
+            <Popup x:Name="locationPopup" AllowsTransparency="True" VerticalOffset="5" PlacementTarget="{Binding ElementName=tb_Search}"  Placement="Bottom" StaysOpen="False">
+                <materialDesign:Card UniformCornerRadius="8">
+                    <ListView x:Name="locationList" Width="{Binding ElementName=tb_Search, Path= ActualWidth}" ItemContainerStyle="{StaticResource AutoCompleteLVItemStyle}" Style="{StaticResource AutoCompleteLVStyle}" Background="{DynamicResource tbSearchBackgroundBrush}" Foreground="{DynamicResource tbSearchForegroundBrush}" MaxHeight="200" SelectionChanged="locationList_SelectionChanged" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}" Margin="5 5 0 5"/>
+                                        <TextBlock Text=", " Margin="0 5 0 5"/>
+                                        <TextBlock Text="{Binding Country}" Margin="0 5 5 5"/>
+                                    </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </materialDesign:Card>
+            </Popup>
+            <Button x:Name="btn_Geolocation" Grid.Column="4" Style="{DynamicResource GeolocationButtonStyle}" Click="btn_Geolocation_Click"></Button>
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width ="auto"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Viewbox Grid.Column="0" Margin="10">
+                <TextBlock  x:Name="tb_curTemprature" Text="{Binding CurrentTempC}" Style="{StaticResource MainTempTbStyle}"  />
+            </Viewbox>
+
+            <Viewbox VerticalAlignment="Center" Grid.Column="1" Margin="20,10,10,20">
+                <DockPanel >
+                    <TextBlock x:Name="tb_curCondition" Style="{StaticResource TbStyle}"  Text="{Binding Condition}" DockPanel.Dock="Bottom" />
+                    <StackPanel DockPanel.Dock="Bottom"  Orientation="Horizontal" HorizontalAlignment="Left" >
+                        <Button Content="°C"  Style="{StaticResource BtnTempratureStyle}" Click="btn_Сelsius_Click" />
+                        <TextBlock Text=" | " HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TbStyle}"  />
+                        <Button Content="°F"  Style="{StaticResource BtnTempratureStyle}" Click="btn_Fahrenheit_Click"/>
+                    </StackPanel>
+                    <TextBlock Text=""/>
+                </DockPanel>
+            </Viewbox>
+
+            <Viewbox Grid.Column="3" VerticalAlignment="Center">
+                <Image VerticalAlignment="Center" Grid.Column="3"  x:Name="im_curCondition"  Height="120" Width="120"></Image>
+            </Viewbox>
+
+            <Viewbox Grid.Column="4" VerticalAlignment="Center">
+                <StackPanel  Grid.Column="4" VerticalAlignment="Center" Margin="20" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image x:Name="im_curFeelsLike" Source="UI/Source/Icons/feels-like.png" />
+                        <TextBlock Text="Feels like: " Style="{StaticResource TbStyle}" />
+                        <TextBlock x:Name="tb_curFeelsLike" Text="{Binding FeelsLikeC}" Style="{StaticResource TbStyle}"  />
+                        <TextBlock Text=" °C" Style="{StaticResource TbStyle}"  />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Image x:Name="im_curHumidity" Source="UI/Source/Icons/humidity.png" />
+                        <TextBlock Text="Humidity: " Style="{StaticResource TbStyle}" />
+                        <TextBlock x:Name="tb_curHumidity" Text="{Binding Humidity}" Style="{StaticResource TbStyle}" />
+                        <TextBlock Text=" %" Style="{StaticResource TbStyle}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Image x:Name="im_curWind" Source="UI/Source/Icons/wind.png" />
+                        <TextBlock Text="Wind: " Style="{StaticResource TbStyle}" />
+                        <TextBlock x:Name="tb_curWind" Text="{Binding WindKph}" Style="{StaticResource TbStyle}" />
+                        <TextBlock Text=" km/h" Style="{StaticResource TbStyle}" />
+                    </StackPanel>
+                </StackPanel>
+            </Viewbox>         
+            
+        </Grid>
+        
+        <materialDesign:Card Grid.Row="2" Background="#10FFFFFF" UniformCornerRadius="20" Margin="0, 10, 0, 5"  >
+            <ListView x:Name="lv_TimeForecastForDay" Style="{StaticResource LVStyle}" ItemContainerStyle = "{StaticResource ListViewItemStyle}"  >
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="1" Columns="5"  />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Viewbox Margin="5">
+                            <StackPanel  Margin="10, 0, 10,0">
+                                <TextBlock Text="{Binding Time, StringFormat='{}{0:HH:mm}'}" HorizontalAlignment="Center" Style="{StaticResource TbStyle}" />
+                                <Image x:Name="im_TimeForecast"  Source="{Binding ForecastImageURL}" Width="50" Height="50" ></Image>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Background="Transparent">
+                                    <TextBlock Text="Temp: " Style="{StaticResource ListTbStyle}"/>
+                                    <TextBlock Text="{Binding TempC}" Style="{StaticResource ListTbStyle}"/>
+                                    <TextBlock Text=" °C" Style="{StaticResource ListTbStyle}"/>
+                                </StackPanel>
+                                <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal" >
+                                    <TextBlock Text="Chance of rain: "  Style="{StaticResource ListTbStyle}" />
+                                    <TextBlock Text="{Binding ChanceOfRain}" Style="{StaticResource ListTbStyle}"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding Condition}"  HorizontalAlignment="Center" Style="{StaticResource ListTbStyle}" />
+                            </StackPanel>
+                        </Viewbox>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </materialDesign:Card>
+
+        <materialDesign:Card Grid.Row="3" Background="#10FFFFFF" UniformCornerRadius="20" Margin="0, 5, 0, 0" >
+            <ListView x:Name="lv_Forecast" ItemContainerStyle="{StaticResource ListViewItemStyle2}"  Style="{StaticResource LVStyle}" SelectionChanged="lv_Forecast_SelectionChanged" >
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="1" Columns="4"  />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Viewbox Margin="5">
+                            <StackPanel HorizontalAlignment="Center" Margin="30, 0, 30,0" >
+                                <TextBlock Text="{Binding Date, StringFormat='{}{0:dddd}'}" HorizontalAlignment="Center" Style="{StaticResource TbStyle}" />
+                                <Image x:Name="im_DayForecast"  Source="{Binding ForecastImageURL}" Width="70" Height="70"></Image>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding MinTempC}"  Style="{StaticResource ListTbStyle}"/>
+                                    <TextBlock Text="° - " Style="{StaticResource ListTbStyle}" />
+                                    <TextBlock Text="{Binding MaxTempC}"  Style="{StaticResource ListTbStyle}" />
+                                    <TextBlock Text="°" Style="{StaticResource ListTbStyle}" />
+                                </StackPanel>
+                                <TextBlock Text="{Binding Condition}" HorizontalAlignment="Center" Style="{StaticResource ListTbStyle}" />
+                            </StackPanel>
+                        </Viewbox>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </materialDesign:Card>
     </Grid>
 </Window>
+
