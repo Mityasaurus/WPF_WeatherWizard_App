@@ -26,7 +26,7 @@ namespace WPF_WeatherWizard_App.AppLayer.Providers
 
         public static Uri GetWeatherIconUri(string iconName)
         {
-            string solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+            string solutionDirectory = Directory.GetCurrentDirectory();
 
             Uri backgroundImageUri = new Uri(Path.Combine(solutionDirectory, $"UI/Source/Icons/{iconName}"));
 
