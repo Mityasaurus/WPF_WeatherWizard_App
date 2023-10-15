@@ -28,8 +28,8 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition MinWidth="10"/>
-                <ColumnDefinition MinWidth="50"  Width="1.4*" />
-                <ColumnDefinition MinWidth="55"  Width="0.6*"/>
+                <ColumnDefinition MinWidth="65"  Width="1.4*" />
+                <ColumnDefinition MinWidth="65"  Width="0.6*"/>
                 <ColumnDefinition  Width="45"/>
             </Grid.ColumnDefinitions>
 
@@ -44,7 +44,23 @@
                 </StackPanel>
             </Viewbox>
             <Button Grid.Column="3" x:Name="btn_Search" Content="Search" Click="btn_Search_Click"  Style="{StaticResource SearchButtonStyle}"/>
-            <TextBox Grid.Column="2" Text="Enter city" x:Name="tb_Search"  GotKeyboardFocus="tb_Search_GotKeyboardFocus" LostKeyboardFocus="tb_Search_LostKeyboardFocus" Style="{StaticResource EnterSearchStyle}"/>
+            <TextBox Grid.Column="2" x:Name="tb_Search" Text="Enter city" TextChanged="tb_Search_TextChanged" GotKeyboardFocus="tb_Search_GotKeyboardFocus" LostKeyboardFocus="tb_Search_LostKeyboardFocus" Style="{StaticResource EnterSearchStyle}"></TextBox>
+
+            <Popup x:Name="locationPopup" AllowsTransparency="True" VerticalOffset="5" PlacementTarget="{Binding ElementName=tb_Search}"  Placement="Bottom" StaysOpen="False">
+                <materialDesign:Card UniformCornerRadius="8">
+                    <ListView x:Name="locationList" Width="{Binding ElementName=tb_Search, Path= ActualWidth}" ItemContainerStyle="{StaticResource AutoCompleteLVItemStyle}" Style="{StaticResource AutoCompleteLVStyle}" Background="{DynamicResource tbSearchBackgroundBrush}" Foreground="{DynamicResource tbSearchForegroundBrush}" MaxHeight="200" SelectionChanged="locationList_SelectionChanged" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}" Margin="5 5 0 5"/>
+                                        <TextBlock Text=", " Margin="0 5 0 5"/>
+                                        <TextBlock Text="{Binding Country}" Margin="0 5 5 5"/>
+                                    </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </materialDesign:Card>
+            </Popup>
             <Button x:Name="btn_Geolocation" Grid.Column="4" Style="{DynamicResource GeolocationButtonStyle}" Click="btn_Geolocation_Click"></Button>
 
         </Grid>
@@ -63,9 +79,7 @@
 
             <Viewbox VerticalAlignment="Center" Grid.Column="1" Margin="20,10,10,20">
                 <DockPanel >
-
                     <TextBlock x:Name="tb_curCondition" Style="{StaticResource TbStyle}"  Text="{Binding Condition}" DockPanel.Dock="Bottom" />
-
                     <StackPanel DockPanel.Dock="Bottom"  Orientation="Horizontal" HorizontalAlignment="Left" >
                         <Button Content="°C"  Style="{StaticResource BtnTempratureStyle}" Click="btn_Сelsius_Click" />
                         <TextBlock Text=" | " HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TbStyle}"  />

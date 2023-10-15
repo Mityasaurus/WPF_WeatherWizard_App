@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Windows;
@@ -46,11 +47,14 @@ namespace WPF_WeatherWizard_App
             timer.Interval = new TimeSpan(0, 2, 30);
             timer.Tick += Timer_Tick;
             timer.Start();
+
+            ContextMenu cm_Search = new ContextMenu();
+            tb_Search.ContextMenu = cm_Search;
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            UpdateWeather(weatherProvider.GetWeatherInfo(currentCity));
+            UpdateWeather(weatherProvider.GetWeatherInfo((double)info.Location.Lat, (double)info.Location.Lon));
 
             if (selectedDayIndex >= 0)
             {
@@ -223,6 +227,19 @@ namespace WPF_WeatherWizard_App
 
             }
         }
+        
+        private void Search(string query)
+        {
+            try
+            {
+                var selectedWeatherInfo = weatherProvider.GetWeatherInfo(query);
+                UpdateWeather(selectedWeatherInfo);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 
         private void tb_Search_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
@@ -262,10 +279,35 @@ namespace WPF_WeatherWizard_App
             {
                 var selectedWeatherInfo = weatherProvider.GetWeatherInfo(gmapWindow.Lat, gmapWindow.Lng);
                 UpdateWeather(selectedWeatherInfo);
+                tb_Search.Text = info.Location.Name;
             }
             catch (Exception ex)
             {
 
+            }
+        }
+        
+        private void tb_Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (weatherProvider == null) return;
+            List<Location> locations = weatherProvider.GetAutoComplete(tb_Search.Text);
+
+            if(locationList != null)
+            {
+                locationList.ItemsSource = locations;
+                locationList.Items.Refresh();
+                locationPopup.IsOpen = !string.IsNullOrWhiteSpace(tb_Search.Text);
+            }
+        }
+
+        private void locationList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            if (locationList.SelectedItem != null)
+            {
+                Location selectedLocation = locationList.SelectedItem as Location;
+                tb_Search.Text = selectedLocation.Name;
+                Search($"{selectedLocation.Lat},{selectedLocation.Lon}");
             }
         }
     }
