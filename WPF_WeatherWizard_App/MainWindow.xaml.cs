@@ -54,7 +54,7 @@ namespace WPF_WeatherWizard_App
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            UpdateWeather(weatherProvider.GetWeatherInfo(currentCity));
+            UpdateWeather(weatherProvider.GetWeatherInfo((double)info.Location.Lat, (double)info.Location.Lon));
 
             if (selectedDayIndex >= 0)
             {
