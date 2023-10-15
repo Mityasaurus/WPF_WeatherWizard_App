@@ -1,6 +1,6 @@
-# Weather Wizard
+# Weather Wizard :partly_sunny:
 
-Weather Wizard is a desktop application for getting up-to-date weather forecasts in any city on the globe. It provides information on weather conditions for today and the next three days, including temperature, wind, precipitation, and other important indicators. The main goal of the application is to provide users with reliable and convenient information for planning activities and traveling with regard to weather conditions.
+Weather Wizard is a desktop application for getting up-to-date weather forecasts in any city on the globe. It provides information on weather conditions for today and the next three days, including :thermometer:temperature, :wind_face:wind, :droplet:precipitation, and other important indicators. The main goal of the application is to provide users with reliable and convenient information for planning activities and traveling with regard to weather conditions.
 
 ## Team
 
@@ -26,18 +26,18 @@ git clone https://github.com/Mityasaurus/WPF_WeatherWizard_App
 
 1. **Viewing the weather forecast:**
 
-    Users can view the weather forecast for today for their current city.
-    User can also view the weather forecast for 3 days ahead for the same city.
+    Users can view the weather forecast for today for their current city:cityscape:.
+    User can also view the weather forecast for 3 days ahead for the same city:clock12:.
 
 2. **Search for a city by name:**
 
-    The user can use the search function to find a city by name or keyword.
-    After entering a city name, the application displays relevant results and allows the user to select a city from the list of results.
+    The user can use the search function to find a city by name or keyword:ab:.
+    After entering a city name, the application displays relevant results and allows the user to select a city from the list of results:abcd:.
 
 3. **Selecting a city on the world map:**
 
-    The application includes functionality to select a city on the world map.
-    The user can browse the world map, select a location, and receive a weather forecast for the selected location.
+    The application includes functionality to select a city on the world map:world_map:.
+    The user can browse the world map, select a location, and receive a weather forecast for the selected location:desert_island:.
 
 ## Authors
 
