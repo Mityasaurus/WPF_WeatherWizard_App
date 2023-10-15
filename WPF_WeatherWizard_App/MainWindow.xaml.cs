@@ -286,37 +286,6 @@ namespace WPF_WeatherWizard_App
 
             }
         }
-
-        private List<Location> TestGetLocationList()
-        {
-            List<Location> list = new List<Location>();
-
-            Location location = new Location()
-            {
-                Name = "Kyiv",
-                Country = "Ukraine",
-                LocalTime = DateTime.Now
-            };
-            Location location2 = new Location()
-            {
-                Name = "Lviv",
-                Country = "Ukraine",
-                LocalTime = DateTime.Now
-            };
-            Location location3 = new Location()
-            {
-                Name = "New York",
-                Country = "United States of America",
-                LocalTime = DateTime.Now
-            };
-
-            list.Add(location);
-            list.Add(location2);
-            list.Add(location3);
-
-            return list;
-        }
-
         
         private void tb_Search_TextChanged(object sender, TextChangedEventArgs e)
         {
