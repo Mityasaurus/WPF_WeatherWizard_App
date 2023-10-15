@@ -150,7 +150,7 @@ namespace WPF_WeatherWizard_App
                 geolocationImageName = "location-dark.png";
             }
 
-            string solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            string solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
 
             Uri geolocationImageUri = new Uri(Path.Combine(solutionDirectory, $"UI/Source/Images/{geolocationImageName}"));
 
@@ -168,7 +168,7 @@ namespace WPF_WeatherWizard_App
                 backgroundName = "background-day.png";
             }
 
-            string solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            string solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
 
             Uri backgroundImageUri = new Uri(Path.Combine(solutionDirectory, $"UI/Source/Images/{backgroundName}"));
 
