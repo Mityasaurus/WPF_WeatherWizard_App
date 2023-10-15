@@ -2,27 +2,27 @@
 
 Weather Wizard is a desktop application for getting up-to-date weather forecasts in any city on the globe. It provides information on weather conditions for today and the next three days, including :thermometer:&nbsp;temperature, :wind_face:&nbsp;wind, :droplet:&nbsp;precipitation, and other important indicators. The main goal of the application is to provide users with reliable and convenient information for planning activities and traveling with regard to weather conditions.
 
-## Team
+## Team :busts_in_silhouette: 
 
-- Dmytro Bovdun - Team Lead
+- Dmytro Bovdun - Team Lead 
 - Yuliia Shliuhanova - UI/UX developer
 - Oleksandr Lavrynenko - App layer developer
 - Yurii Sokolovskyi - API developer
 
-## Technologies and Tools
+## Technologies and Tools :wrench:
 
 - Language: C#
 - Windows Presentation Foundation (WPF)
 - HTTP Requests
 
-## Installation
+## Installation :arrow_down: 
 
 To install an app from Git, clone the repository
 
 ```shell
 git clone https://github.com/Mityasaurus/WPF_WeatherWizard_App
 ```
-## Usage
+## Usage :computer:
 
 1. **Viewing the weather forecast:**
 
@@ -47,7 +47,7 @@ git clone https://github.com/Mityasaurus/WPF_WeatherWizard_App
 
    ![world map](https://i.imgur.com/xbVRbUh.png)
 
-## Authors
+## Authors :pencil2: 
 
 - **Dmytro Bovdun** - Team Lead
     - GitHub: [https://github.com/Mityasaurus](https://github.com/Mityasaurus)
