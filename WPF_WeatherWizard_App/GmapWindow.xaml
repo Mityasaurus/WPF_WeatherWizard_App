@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPF_WeatherWizard_App"
         mc:Ignorable="d"
         xmlns:gmap="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation" 
-        Title="GMapWindow" Height="400" Width="600">
+        Title="GMapWindow" Height="500" Width="700">
     <Grid>
         <gmap:GMapControl x:Name="gmapControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
     </Grid>
