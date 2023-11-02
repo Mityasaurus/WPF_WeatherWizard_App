@@ -7,7 +7,7 @@ public class WeatherWizardApiEngine : IApi
 {
     private HttpClient _client { get; set; }
     private string _baseAddress = "http://api.weatherapi.com/v1/forecast.json";
-    private string _apiKey = "3e21b608b818455ea86165609230810";
+    private string _apiKey = "5ce9c0bc0e3e4b12b4c200950230111";
 
     public WeatherWizardApiEngine()
     {
